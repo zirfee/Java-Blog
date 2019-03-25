@@ -1,0 +1,105 @@
+泛型其实不"广泛";相反,泛型是"约束":
+
+
+
+public class heap<T> {
+    private T key=null;
+
+    heap(T t){
+        this.key=t;
+    }
+
+    public static void main(String[] args){
+    
+       heap<String>  demo = new heap<String>("测试");
+         demo.key; //String字符串
+     
+    }
+}
+
+一旦以泛型方式实例化对象,编译时就会按照给定的实例化参数(代码中为Stirng)来确定"T"的类型,编译完成转化为下面的样子:
+public class heap {
+    private String key=null;
+
+    heap(String t){
+        this.key=t;
+    }
+
+    public static void main(String[] args){
+
+       heap  demo = new heap("测试");
+         demo.key;//String字符串
+    }
+}
+
+之所以要把泛型类转化为普通类,是因为java虚拟机并不认识泛型类,这样泛型类是无法直接执行的,
+所以编译器遇到泛型类时就会把泛型类根据实例化时指定的T类型转化为上面的普通类,虚拟机就可以执行
+
+一旦实例化时指定T的类型,T的类型就确定了(泛型类转化为了普通类),给T赋其他类型的值就会报错,就像上面的代码只能给key赋值String了
+比如rrrayList<String>就只能add(String)而不能添加其他对象
+
+泛型类需要编译器转化为普通类,但如果实例化时不指定T的类型呢?我们用普通方式实例化:
+public class heap<T> {
+    private T key=null;
+
+    heap(T t){
+        this.key=t;
+    }
+
+    public static void main(String[] args){
+    
+        heap  demo = new heap("测试"); //普通实例化,不给T指定类型
+         demo.key;//object对象
+     
+    }
+}
+
+运行后发现,key变成了object对象,事实上,普通实例化也可以实例化泛型类,只是如果不指定泛型参数T的类型的话,编译器默认把T当成object对象,等价于:
+
+public class heap {
+    private Object key=null;
+
+    heap(Object  t){
+        this.key=t;
+    }
+
+    public static void main(String[] args){
+    
+        heap  demo = new heap("测试"); //普通实例化,不给T指定类型
+         demo.key;//object对象
+     
+    }
+}
+
+执行后key自然就是object了
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
