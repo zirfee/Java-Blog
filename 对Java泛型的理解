@@ -32,7 +32,7 @@ public class heap {
     }
 }
 
-之所以要把泛型类转化为普通类,是因为java虚拟机并不认识泛型类,这样泛型类是无法直接执行的,
+之所以要把泛型类转化为普通类,是因为java虚拟机并不认识泛型类,即泛型类是无法直接执行的,
 所以编译器遇到泛型类时就会把泛型类根据实例化时指定的T类型转化为上面的普通类,虚拟机就可以执行
 
 一旦实例化时指定T的类型,T的类型就确定了(泛型类转化为了普通类),给T赋其他类型的值就会报错,就像上面的代码只能给key赋值String了
@@ -72,6 +72,42 @@ public class heap {
 }
 
 执行后key自然就是object了
+
+泛型通配符"?"
+
+值得一提的是,形如List<father>和List<son>这样的参数存在继承关系的泛型类,泛型之间本身并没有任何关系.比如定义以下类和方法:
+     class father{
+        public void say(){
+           System.out.print("Im father")
+        }
+     }
+     
+      class son{
+        public void say(){
+           System.out.print("Im father")
+        }
+     }
+     
+
+   pubiic void  test(List<father> fa)  //该方法接受List<father>参数
+        father f =fa.get(0);
+              f.
+   }
+ 
+  是否可以这样使用test方法:test(List<son> son)
+    
+
+
+
+
+
+
+
+
+
+
+这很好理解,前面已经说过泛型类在编译时会去泛型化
+
 
 
 
