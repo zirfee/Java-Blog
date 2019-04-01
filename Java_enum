@@ -1,6 +1,6 @@
 
  枚举类的目的就是为了定义不可变的全局对象
- 传统定义方式:
+ **传统**定义方式:
     class Day{
 
     public static final int MONDAY =1;
