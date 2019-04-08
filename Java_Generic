@@ -1,7 +1,7 @@
 泛型其实不"广泛";某种意义上说,泛型是"约束".泛型在逻辑上可以接受任何对象,在编译完成后固化了类型:
 
 
-public class heap<T> {
+    public class heap<T> {
     private T key=null;
 
     heap(T t){
