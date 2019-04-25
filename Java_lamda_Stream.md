@@ -16,7 +16,7 @@ java8之前函数封装在对象的方法里面,调用函数需要先实例化:
     });
   
  actionListener是一个**函数式接口**
- ## 函数式接口
+ #### 函数式接口
  函数式接口(Functional Interface)就是一个有且仅有一个抽象方法，但是可以有多个非抽象方法的接口。
  函数式接口可以被隐式转换为 lambda 表达式。
  可以自定义函数式接口 用@FunctionalInterface标记
