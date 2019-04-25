@@ -24,14 +24,29 @@ java8之前函数封装在对象的方法里面,调用函数需要先实例化:
  定义了一个函数式接口如下：
  
     @FunctionalInterface
-    interface GreetingService 
-    {
-    void sayMessage(String message);
+    interface fun{
+    void say(String s);
     }
 
 给该接口增加处理逻辑:
   
-    GreetingService greetService1 = message -> System.out.println("Hello " + message);
+    fun f = message -> System.out.println("Hello " + message);
+           f.say("777");//执行
+           
+函数式接口对像与lambda表达式等价,表达式可以当作接口对象参数接受:
+
+    public void del(fun f){
+      f.say("777");
+    }
+    
+    del(el -> System.out.println("Hello " + el));
+    
+#Stream
+ java8中Stream主要简化对collection对象的操作
+ 
+ -  list.Stream() //创建串行流,单线程
+ -  list.ParallelStream()  //创建并行流,多线程执行,效率高
+ 
   
 
   
