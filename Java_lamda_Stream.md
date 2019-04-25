@@ -41,7 +41,7 @@ java8之前函数封装在对象的方法里面,调用函数需要先实例化:
     
     del(el -> System.out.println("Hello " + el));
     
-#Stream
+# Stream
  java8中Stream主要简化对collection对象的操作
  
  -  list.Stream() //创建串行流,单线程
