@@ -54,7 +54,7 @@ Stream 提供了新的方法 'forEach' 来迭代流中的每个数据。以下�
     Random random = new Random();
     random.ints().limit(10).forEach(System.out::println);
     
-####  ::
+####  双冒号::
    类名::方法名
 
     person :: getName
