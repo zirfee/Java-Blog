@@ -54,6 +54,21 @@ Stream 提供了新的方法 'forEach' 来迭代流中的每个数据。以下�
     Random random = new Random();
     random.ints().limit(10).forEach(System.out::println);
     
+####  ::
+   类名::方法名
+
+    person :: getName
+   
+  等价于
+  
+    person.getNme()
+  
+  像
+  
+    System.out::println
+    
+  取得printStream对象,调用println()方法
+    
 ### map
 map 方法用于映射每个元素到对应的结果，以下代码片段使用 map 输出了元素对应的平方数：
 
