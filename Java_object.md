@@ -41,11 +41,13 @@ object类是所有类的超类,里面定义了一些java对象共有的方法,�
    所有对象都有一个hashCode方法,该方法默认返回对象内存地址(因为不同对象内存地址不可能相同)
    
    可以自己定义hashCode方法,如String类重写了hashCode()方法,根据字面值计算hashCode,如:
+   
                        String a = new String("张三");
                        String b = new String("张三");
                    System.out.println( a.hashCode());//774889
                    System.out.println( b.hashCode());//774889
-             String类重写hashCode是必须的,因为String类重写了equals()方法
+                   
+   String类重写hashCode是必须的,因为String类重写了equals()方法
              
              
              
