@@ -1,7 +1,8 @@
-实现动态代理,代理类与被代理类必须存在关系,即:
+实现动态代理,代理类与被代理类必须存在关系:
 
-a 代理类继承被代理类
-b 两类共同实现某个接口
+1. 代理类继承被代理类
+
+2. 两类共同实现某个接口
 
 以便于代理类获取必要的信息.
 
@@ -71,19 +72,23 @@ cglib动态代理的对象不必实现接口,但是生成的代理类默认继�
 
     // 返回代理对象
     public Object getProxyInstance() {
-              //     newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(),invocationHandler类)
-              // 参数一:获得被代理对象的类加载器,因为代理对象动态生成,没有被虚拟机加载,必须指定适合的类加载器来解析注册代理类以使用
-              //参数二:获得被代理类的接口
-              //参数三:获得invocationHandler对象,类似于new InvocayionHandler()
+        //newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(),invocationHandler类对象)
+        //参数一:获得被代理对象的类加载器,因为代理对象动态生成,没有被虚拟机加载,必须指定适合的类加载器来解析注册代理类以使用
+        //参数二:获得被代理类的接口
+        //参数三:类似于new InvocayionHandler(传入被代理类对象),此类对被代理类进行包装,方法的织入,代理对象方法被调用时实际上调用的是此类的invoke方法
         return Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(),
                 new InvocationHandler() {
-                      //由代理类调用方法时会自动传到invocationhandler对象执行invoke方法,invoke方法写提供织入逻辑
+                     
                     @Override
                     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                     //由代理类调用方法时会自动传到invocationhandler对象执行invoke方法,invoke方法写提供织入逻辑
+                      //参数一:代理对象执行方法时,会间接执行invoke()方法,参数一传入的是代理对象本身
+                      //参数二:代理对象执行的方法所属的method对象,便于利用反射执行方法
+                      //参数三:方法参数
                         System.out.println("开启事务"); //方法前织入的代码
 
                         // 执行目标对象方法
-                        Object returnValue = method.invoke(target, args); //原本的方法执行
+                        Object returnValue = method.invoke(target, args); //利用反射执行方法,参数一:方法所属对象,参数二:方法参数
 
                         System.out.println("提交事务");方法执行后植入
                         return null;
@@ -92,10 +97,60 @@ cglib动态代理的对象不必实现接口,但是生成的代理类默认继�
     }
     } 
 
+**cglib动态代理**
 
+使用cglib代理需要导入相应的包
 
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>3.2.5</version>
+    </dependency>
 
+目标对象：UserDao
 
+    public class UserDao{
+
+    public void save() {
+        System.out.println("保存数据");
+    }
+    }
+
+代理对象工厂:ProxyFactory
+
+    import java.lang.reflect.Method;
+    import net.sf.cglib.proxy.Enhancer;
+    import net.sf.cglib.proxy.MethodInterceptor;
+    import net.sf.cglib.proxy.MethodProxy;
+
+    public class ProxyFactory implements MethodInterceptor{
+
+    private Object target;//维护一个目标对象
+    public ProxyFactory(Object target) {
+        this.target = target;
+    }
+    
+    //生成代理对象
+    public Object getProxyInstance() {
+        //工具类
+        Enhancer en = new Enhancer();
+        //设置父类
+        en.setSuperclass(target.getClass());
+        //设置回调函数
+        en.setCallback(this); //this代表代理对象实例化时传入了methodInterceptor对象
+        //创建子类对象代理
+        return en.create();
+    }
+
+    @Override    //方法织入,代理对象执行方法时由此方法代替
+    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+        System.out.println("开启事务");
+        // 执行目标对象的方法
+        Object returnValue = method.invoke(target, args);
+        System.out.println("关闭事务");
+        return null;
+    }
+    }
 
 
 
