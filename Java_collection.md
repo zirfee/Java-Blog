@@ -66,13 +66,19 @@ ArrayList没问题,linkedList是链表结构,用get()效率极低,遍历链表�
 也就是插入的对象所在的类必须实现comparable接口.与hashSet相比,treeSet多出了对元素排序的开销.
 
 #### Map
+Map(映射)没有继承collection,但map与collection关系密切.hashMap类比hashSet,原来hashSet的值成为了一个指针,或者叫键,该键指向了一个对象,称为值
 
-　　Map(映射)没有继承collection,但map与collection关系密切.
-hashMap类比hashSet,原来hashSet的值成为了一个指针,或者叫键,该键指向了一个对象,称为值.
 treeMap相比hashMap,对键进行了排序,比hashMap增加了排序开销
+
 weakHashMap  map中一直保存着对象的引用(键--对象),导致垃圾对象不能回收,使用weakHashMap会自动回收没有受到其他引用的对象
 				 
 　　map中存值用put(key,value)方法,put相同的key会覆盖原来的键值对,返回原来的值,remove(key)方法用来删除键值对,取值用get(key)
+  
+**hashMap** hashSet加上叶子,不再赘述
+
+**hashTable** 线程安全的hashMap,利用Synchronized,锁住整个map对象,开销大.
+
+**concurrentMap** 线程安全的hashMap,通过lock()同步,通过给map对象分片,每次只锁map对象的一片,不妨碍其他片的请求,性能比hashTable好
 				 
 ## 映射视图  
 　　map的键集可以看作一个set视图,值集可以看作一个collection视图,set<map.entry<>>也是一个set视图,不过保存的是键值对对象map.entry<>
