@@ -97,6 +97,10 @@ cglib动态代理的对象不必实现接口,但是生成的代理类默认继�
     }
     } 
 
+执行过程:如下执行save()方法时,会直接执行invoke()方法,该方法通过反射获得要执行的save()方法信息,并且织入其他过程.之后返回一个拥有该方法的代理对象
+
+new UserProxyFactory(new UserDao()).getProxyInstance().save()
+
 **cglib动态代理**
 
 使用cglib代理需要导入相应的包
